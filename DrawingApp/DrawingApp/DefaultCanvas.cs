@@ -12,7 +12,7 @@ namespace DrawingApp
         {
             Init();
         }
-
+        // Tes
         private void Init()
         {
             this.DoubleBuffered = true;
