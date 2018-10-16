@@ -1,4 +1,5 @@
-﻿using DrawingApp.MenuItems;
+﻿using DrawingApp.Commands;
+using DrawingApp.MenuItems;
 using DrawingApp.ToolbarItems;
 using DrawingApp.Tool;
 using System.Diagnostics;
@@ -23,24 +24,40 @@ namespace DrawingApp
         {
             Debug.WriteLine("Initializing UI objects.");
 
+            #region Canvas
+            Debug.WriteLine("Loading canvas...");
+            this.canvas = new DefaultCanvas();
+            this.toolStripContainer1.ContentPanel.Controls.Add((Control)this.canvas);
+            #endregion
+
+            #region Commands
+
+            BlackCanvasBgCommands blackCanvasBgCommands = new BlackCanvasBgCommands(this.canvas);
+            WhiteCanvasBgCommands whiteCanvasBgCommands = new WhiteCanvasBgCommands(this.canvas);
+
+            #endregion
+
             #region Menubar
             Debug.WriteLine("Loading menubar...");
             this.menubar = new DefaultMenubar();
             this.Controls.Add((Control)this.menubar);
 
-            DefaultMenuItem exampleMenuItem1 = new DefaultMenuItem("File");
-            this.menubar.AddMenuItem(exampleMenuItem1);
+            DefaultMenuItem fileMenuItem = new DefaultMenuItem("File");
+            this.menubar.AddMenuItem(fileMenuItem);
 
-            DefaultMenuItem exampleMenuItem11 = new DefaultMenuItem("New");
-            exampleMenuItem1.AddMenuItem(exampleMenuItem11);
+            DefaultMenuItem newMenuItem = new DefaultMenuItem("New");
+            fileMenuItem.AddMenuItem(newMenuItem);
 
-            DefaultMenuItem exampleMenuItem2 = new DefaultMenuItem("Edit");
-            this.menubar.AddMenuItem(exampleMenuItem2);
+            DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
+            this.menubar.AddMenuItem(editMenuItem);
 
-            DefaultMenuItem exampleMenuItem21 = new DefaultMenuItem("Cut");
-            exampleMenuItem2.AddMenuItem(exampleMenuItem21);
-            DefaultMenuItem exampleMenuItem22 = new DefaultMenuItem("Copy");
-            exampleMenuItem2.AddMenuItem(exampleMenuItem22);
+            DefaultMenuItem changeToBlackMenuItem = new DefaultMenuItem("Change to Black");
+            changeToBlackMenuItem.SetCommand(blackCanvasBgCommands);
+            editMenuItem.AddMenuItem(changeToBlackMenuItem);
+
+            DefaultMenuItem changeToWhiteMenuItem = new DefaultMenuItem("Change to White");
+            changeToWhiteMenuItem.SetCommand(whiteCanvasBgCommands);
+            editMenuItem.AddMenuItem(changeToWhiteMenuItem);
 
             #endregion
 
@@ -69,19 +86,15 @@ namespace DrawingApp
             this.toolbar = new DefaultToolbar();
             this.toolStripContainer1.TopToolStripPanel.Controls.Add((Control)this.toolbar);
 
-            this.toolbar.AddToolbarItem(new ExampleToolbarItem());
+            ExampleToolbarItem whiteBackgroundTool = new ExampleToolbarItem();
+            whiteBackgroundTool.SetCommand(whiteCanvasBgCommands);
+            ExampleToolbarItem blackBackgroundTool = new ExampleToolbarItem();
+            blackBackgroundTool.SetCommand(blackCanvasBgCommands);
+
+            this.toolbar.AddToolbarItem(whiteBackgroundTool);
             this.toolbar.AddSeparator();
-            this.toolbar.AddToolbarItem(new ExampleToolbarItem());
-
+            this.toolbar.AddToolbarItem(blackBackgroundTool);
             #endregion
-
-            #region Canvas
-            Debug.WriteLine("Loading canvas...");
-            this.canvas = new DefaultCanvas();
-            this.toolStripContainer1.ContentPanel.Controls.Add((Control)this.canvas);
-
-            #endregion
-
 
         }
 

@@ -10,5 +10,6 @@ namespace DrawingApp
     {
         string Text { get; set; }
         void AddMenuItem(IMenuItem menuItem);
+        void SetCommand(ICommand command);
     }
 }
