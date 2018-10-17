@@ -18,6 +18,11 @@ namespace DrawingApp
 
         public event ToolSelectedEventHandler ToolSelected;
 
+        public void AddSeparator()
+        {
+            this.Items.Add(new ToolStripSeparator());
+        }
+
         public void AddTool(ITool tool)
         {
             Debug.WriteLine(tool.Name + " is added into toolbox");

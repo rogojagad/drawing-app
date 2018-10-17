@@ -17,10 +17,10 @@ namespace DrawingApp
         public MainWindow()
         {
             InitializeComponent();
-            InitForm();
+            InitUI();
         }
 
-        private void InitForm()
+        private void InitUI()
         {
             Debug.WriteLine("Initializing UI objects.");
 
@@ -74,8 +74,10 @@ namespace DrawingApp
 
             // Initializing tools
             Debug.WriteLine("Loading tools...");
-            this.toolbox.AddTool(new ExampleTool());
-            this.toolbox.AddTool(new ExampleTool());
+            this.toolbox.AddTool(new SelectionTool());
+            this.toolbox.AddSeparator();
+            this.toolbox.AddTool(new LineTool());
+            this.toolbox.AddTool(new RectangleTool());
             this.toolbox.ToolSelected += Toolbox_ToolSelected;
 
             #endregion
@@ -102,6 +104,7 @@ namespace DrawingApp
         {
             if (this.canvas != null)
             {
+                Debug.WriteLine("Tool " + tool.Name + " is selected");
                 this.canvas.SetActiveTool(tool);
                 tool.TargetCanvas = this.canvas;
             }

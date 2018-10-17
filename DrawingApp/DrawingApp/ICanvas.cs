@@ -12,5 +12,7 @@ namespace DrawingApp
         void SetActiveTool(ITool tool);
         void Repaint();
         void SetBackgroundColor(Color color);
+
+        void AddDrawingObject(DrawingObject drawingObject);
     }
 }
