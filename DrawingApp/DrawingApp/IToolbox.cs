@@ -13,6 +13,7 @@ namespace DrawingApp
         event ToolSelectedEventHandler ToolSelected;
         void AddTool(ITool tool);
         void RemoveTool(ITool tool);
+        void AddSeparator();
         ITool ActiveTool { get; }
     }
 }
