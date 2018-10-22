@@ -85,5 +85,14 @@ namespace DrawingApp
             this.Repaint();
             Debug.WriteLine("New drawing object");
         }
+        /*
+        public DrawingObject GetObjectAt(int x, int y)
+        {
+            foreach (DrawingObject drawingObject in drawingObjects)
+            {
+                
+            }
+        }
+        */
     }
 }

@@ -14,5 +14,6 @@ namespace DrawingApp
         }
 
         public abstract void Draw();
+     //   public abstract bool intersect(int x, int y);
     }
 }
