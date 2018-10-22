@@ -14,6 +14,6 @@ namespace DrawingApp
         void SetBackgroundColor(Color color);
 
         void AddDrawingObject(DrawingObject drawingObject);
-        //DrawingObject GetObjectAt(int x, int y);
+        void RemoveDrawingObject(DrawingObject drawingObject);
     }
 }

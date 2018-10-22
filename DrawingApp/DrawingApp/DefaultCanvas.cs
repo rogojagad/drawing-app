@@ -88,5 +88,10 @@ namespace DrawingApp
             this.Repaint();
             Debug.WriteLine("New drawing object");
         }
+
+        public void RemoveDrawingObject(DrawingObject drawingObject)
+        {
+            this.drawingObjects.Remove(drawingObject);
+        }
     }
 }
