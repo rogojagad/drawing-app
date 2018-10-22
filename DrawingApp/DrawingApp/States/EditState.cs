@@ -22,7 +22,7 @@ namespace DrawingApp.States
 
         public override void Draw(StatefulDrawingObject obj)
         {
-            obj.DrawOnEditingView();
+            obj.RenderOnEditingView();
         }
 
         public override void Deselect(StatefulDrawingObject obj)

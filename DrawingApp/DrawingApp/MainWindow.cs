@@ -1,7 +1,7 @@
 ﻿using DrawingApp.Commands;
 using DrawingApp.MenuItems;
 using DrawingApp.ToolbarItems;
-using DrawingApp.Tool;
+using DrawingApp.Tools;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -77,6 +77,7 @@ namespace DrawingApp
             this.toolbox.AddTool(new SelectionTool());
             this.toolbox.AddSeparator();
             this.toolbox.AddTool(new LineTool());
+            this.toolbox.AddTool(new StatefulLineTool());
             this.toolbox.AddTool(new RectangleTool());
             this.toolbox.ToolSelected += Toolbox_ToolSelected;
 

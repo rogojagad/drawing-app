@@ -35,7 +35,7 @@ namespace DrawingApp.Shapes
 
         public override void RenderOnStaticView()
         {
-            this.pen = new Pen(Color.Red);
+            this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
 
             if (this.Graphics != null)

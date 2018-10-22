@@ -35,6 +35,7 @@ namespace DrawingApp
             if (this.activeTool != null)
             {
                 this.activeTool.ToolMouseMove(sender, e);
+                this.Repaint();
             }
         }
 
@@ -43,6 +44,7 @@ namespace DrawingApp
             if (this.activeTool != null)
             {
                 this.activeTool.ToolMouseUp(sender, e);
+                this.Repaint();
             }
         }
 
@@ -51,6 +53,7 @@ namespace DrawingApp
             if (this.activeTool != null)
             {
                 this.activeTool.ToolMouseDown(sender, e);
+                this.Repaint();
             }
         }
 
@@ -85,14 +88,5 @@ namespace DrawingApp
             this.Repaint();
             Debug.WriteLine("New drawing object");
         }
-        /*
-        public DrawingObject GetObjectAt(int x, int y)
-        {
-            foreach (DrawingObject drawingObject in drawingObjects)
-            {
-                
-            }
-        }
-        */
     }
 }
