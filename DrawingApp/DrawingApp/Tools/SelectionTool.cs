@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using DrawingApp.Shapes;
 
-namespace DrawingApp.Tool
+namespace DrawingApp.Tools
 {
     public class SelectionTool : ToolStripButton, ITool
     {
