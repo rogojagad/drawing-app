@@ -5,14 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
-using DrawingApp.Shapes;
 
 namespace DrawingApp.Tools
 {
     public class SelectionTool : ToolStripButton, ITool
     {
         private ICanvas canvas;
-        private LineSegment lineSegment;
+        private DrawingObject selectedObject;
+        private int xInitial;
+        private int yInitial;
 
         public Cursor Cursor
         {
@@ -45,17 +46,35 @@ namespace DrawingApp.Tools
 
         public void ToolMouseDown(object sender, MouseEventArgs e)
         {
-            throw new NotImplementedException();
+            this.xInitial = e.X;
+            this.yInitial = e.Y;
+
+            if (e.Button == MouseButtons.Left && canvas != null)
+            {
+                canvas.DeselectAllObjects();
+                this.selectedObject = canvas.SelectObjectAt(e.X, e.Y);
+            }
         }
 
         public void ToolMouseMove(object sender, MouseEventArgs e)
         {
-            throw new NotImplementedException();
+            if (e.Button == MouseButtons.Left && canvas != null)
+            {
+                if (selectedObject != null)
+                {
+                    int xAmount = e.X - this.xInitial;
+                    int yAmount = e.Y - this.yInitial;
+                    xInitial = e.X;
+                    yInitial = e.Y;
+
+                    selectedObject.Translate(e.X, e.Y, xAmount, yAmount);
+                }
+            }
         }
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

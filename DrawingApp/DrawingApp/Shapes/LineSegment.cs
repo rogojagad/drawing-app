@@ -47,7 +47,15 @@ namespace DrawingApp.Shapes
 
         public override void RenderOnEditingView()
         {
-            RenderOnStaticView();
+            this.pen = new Pen(Color.Blue);
+            pen.Width = 1.5f;
+            pen.DashStyle = DashStyle.Solid;
+
+            if (this.Graphics != null)
+            {
+                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                this.Graphics.DrawLine(pen, this.Startpoint, this.Endpoint);
+            }
         }
 
         public override void RenderOnPreview()
@@ -76,6 +84,12 @@ namespace DrawingApp.Shapes
             }
 
             return false;
+        }
+
+        public override void Translate(int x, int y, int xAmount, int yAmount)
+        {
+            this.Startpoint = new Point(this.Startpoint.X + xAmount, this.Startpoint.Y + yAmount);
+            this.Endpoint = new Point(this.Endpoint.X + xAmount, this.Endpoint.Y + yAmount);
         }
 
         public double GetSlope()

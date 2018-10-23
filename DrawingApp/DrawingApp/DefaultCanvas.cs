@@ -94,7 +94,7 @@ namespace DrawingApp
             this.drawingObjects.Remove(drawingObject);
         }
 
-        public DrawingObject SelectObjectAt(int x, int y)
+        public DrawingObject GetObjectAt(int x, int y)
         {
             foreach (DrawingObject obj in this.drawingObjects)
             {
@@ -107,9 +107,24 @@ namespace DrawingApp
             return null;
         }
 
+        public DrawingObject SelectObjectAt(int x, int y)
+        {
+            DrawingObject obj = GetObjectAt(x, y);
+
+            if (obj != null)
+            {
+                obj.Select();
+            }
+
+            return obj;
+        }
+
         public void DeselectAllObjects()
         {
-            // to be continued....
+            foreach (DrawingObject obj in this.drawingObjects)
+            {
+                obj.Deselect();
+            }
         }
     }
 }
