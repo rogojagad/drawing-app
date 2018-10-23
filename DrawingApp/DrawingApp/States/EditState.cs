@@ -20,12 +20,12 @@ namespace DrawingApp.States
             return instance;
         }
 
-        public override void Draw(StatefulDrawingObject obj)
+        public override void Draw(DrawingObject obj)
         {
             obj.RenderOnEditingView();
         }
 
-        public override void Deselect(StatefulDrawingObject obj)
+        public override void Deselect(DrawingObject obj)
         {
             obj.ChangeState(StaticState.GetInstance());
         }

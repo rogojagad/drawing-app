@@ -93,5 +93,23 @@ namespace DrawingApp
         {
             this.drawingObjects.Remove(drawingObject);
         }
+
+        public DrawingObject SelectObjectAt(int x, int y)
+        {
+            foreach (DrawingObject obj in this.drawingObjects)
+            {
+                if (obj.Intersect(x,y))
+                {
+                    return obj;
+                }
+            }
+
+            return null;
+        }
+
+        public void DeselectAllObjects()
+        {
+            // to be continued....
+        }
     }
 }

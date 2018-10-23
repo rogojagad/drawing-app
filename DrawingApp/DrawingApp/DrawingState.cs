@@ -18,14 +18,14 @@ namespace DrawingApp
 
         private DrawingState state;
 
-        public abstract void Draw(StatefulDrawingObject obj);
+        public abstract void Draw(DrawingObject obj);
 
-        public virtual void Deselect(StatefulDrawingObject obj)
+        public virtual void Deselect(DrawingObject obj)
         {
 
         }
 
-        public virtual void Select(StatefulDrawingObject obj)
+        public virtual void Select(DrawingObject obj)
         {
 
         }
