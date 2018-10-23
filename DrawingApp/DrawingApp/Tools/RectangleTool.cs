@@ -7,12 +7,12 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using DrawingApp.Shapes;
 
-namespace DrawingApp.Tool
+namespace DrawingApp.Tools
 {
-    public class LineTool : ToolStripButton, ITool
+    public class RectangleTool : ToolStripButton, ITool
     {
         private ICanvas canvas;
-        private LineSegment lineSegment;
+        private Rectangle rectangle;
 
         public Cursor Cursor
         {
@@ -35,28 +35,54 @@ namespace DrawingApp.Tool
             }
         }
 
-        public LineTool()
+        public RectangleTool()
         {
-            this.Name = "Line Tool";
-            this.ToolTipText = "Line Tool";
-            this.Image = IconSet.diagonal_line;
+            this.Name = "Rectangle Tool";
+            this.ToolTipText = "Rectangle Tool";
+            this.Image = IconSet.bounding_box;
             this.CheckOnClick = true;
         }
 
         public void ToolMouseDown(object sender, MouseEventArgs e)
         {
-            lineSegment = new LineSegment(new System.Drawing.Point(e.X, e.Y));
+            if (e.Button == MouseButtons.Left)
+            {
+                this.rectangle = new Rectangle(e.X, e.Y);
+                this.canvas.AddDrawingObject(this.rectangle);
+            }
         }
 
         public void ToolMouseMove(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (this.rectangle != null)
+                {
+                    int width = e.X - this.rectangle.X;
+                    int height = e.Y - this.rectangle.Y;
 
+                    if (width > 0 && height > 0)
+                    {
+                        this.rectangle.Width = width;
+                        this.rectangle.Height = height;
+                    }
+                }
+            }
         }
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
-            lineSegment.Endpoint = new System.Drawing.Point(e.X, e.Y);
-            canvas.AddDrawingObject(lineSegment);
+            if (rectangle != null)
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    this.rectangle.Select();
+                }
+                else if (e.Button == MouseButtons.Right)
+                {
+                    canvas.RemoveDrawingObject(this.rectangle);
+                }
+            }           
         }
     }
 }

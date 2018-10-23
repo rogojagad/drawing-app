@@ -7,12 +7,12 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using DrawingApp.Shapes;
 
-namespace DrawingApp.Tool
+namespace DrawingApp.Tools
 {
-    public class RectangleTool : ToolStripButton, ITool
+    public class LineTool : ToolStripButton, ITool
     {
         private ICanvas canvas;
-        private Rectangle rectangle;
+        private LineSegment lineSegment;
 
         public Cursor Cursor
         {
@@ -35,19 +35,23 @@ namespace DrawingApp.Tool
             }
         }
 
-        public RectangleTool()
+        public LineTool()
         {
-            this.Name = "Rectangle Tool";
-            this.ToolTipText = "Rectangle Tool";
-            this.Image = IconSet.bounding_box;
+            this.Name = "Line Tool";
+            this.ToolTipText = "Line Tool";
+            this.Image = IconSet.diagonal_line;
             this.CheckOnClick = true;
         }
 
         public void ToolMouseDown(object sender, MouseEventArgs e)
         {
+            //lineSegment = new LineSegment(new System.Drawing.Point(e.X, e.Y));
+
             if (e.Button == MouseButtons.Left)
             {
-                this.rectangle = new Rectangle(e.X, e.Y);
+                lineSegment = new LineSegment(new System.Drawing.Point(e.X, e.Y));
+                lineSegment.Endpoint = new System.Drawing.Point(e.X, e.Y);
+                canvas.AddDrawingObject(lineSegment);
             }
         }
 
@@ -55,25 +59,26 @@ namespace DrawingApp.Tool
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (this.rectangle != null)
+                if (this.lineSegment != null)
                 {
-                    int width = e.X - this.rectangle.X;
-                    int height = e.Y - this.rectangle.Y;
-
-                    if (width > 0 && height > 0)
-                    {
-                        this.rectangle.Width = width;
-                        this.rectangle.Height = height;
-                    }
+                    lineSegment.Endpoint = new System.Drawing.Point(e.X, e.Y);
                 }
             }
         }
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (this.lineSegment != null)
             {
-                this.canvas.AddDrawingObject(this.rectangle);
+                if (e.Button == MouseButtons.Left)
+                {
+                    lineSegment.Endpoint = new System.Drawing.Point(e.X, e.Y);
+                    lineSegment.Select();
+                }
+                else if (e.Button == MouseButtons.Right)
+                {
+                    canvas.RemoveDrawingObject(this.lineSegment);
+                }
             }
         }
     }

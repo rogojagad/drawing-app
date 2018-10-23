@@ -1,7 +1,7 @@
 ﻿using DrawingApp.Commands;
 using DrawingApp.MenuItems;
 using DrawingApp.ToolbarItems;
-using DrawingApp.Tool;
+using DrawingApp.Tools;
 using System.Diagnostics;
 using System.Windows.Forms;
 
