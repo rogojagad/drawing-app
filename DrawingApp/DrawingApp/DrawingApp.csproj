@@ -108,9 +108,6 @@
     <Compile Include="Tools\RectangleTool.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Tools\ExampleTools.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <EmbeddedResource Include="CursorSet.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CursorSet.Designer.cs</LastGenOutput>
