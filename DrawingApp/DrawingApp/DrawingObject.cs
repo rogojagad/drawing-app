@@ -8,9 +8,9 @@ namespace DrawingApp
     public abstract class DrawingObject
     {
         public Guid ID { get; set; }
-        public Graphics Graphics { get; set; }
 
         private DrawingState state;
+        private Graphics graphics;
 
         public DrawingState State
         {
@@ -25,6 +25,9 @@ namespace DrawingApp
             ID = Guid.NewGuid();
             this.ChangeState(PreviewState.GetInstance());
         }
+
+        public abstract void Add(DrawingObject obj);
+        public abstract void Remove(DrawingObject obj);
 
         public abstract bool Intersect(int xTest, int yTest);
         public abstract void Translate(int x, int y, int xAmount, int yAmount);
@@ -41,6 +44,16 @@ namespace DrawingApp
         public virtual void Draw()
         {
             this.state.Draw(this);
+        }
+
+        public virtual void SetGraphics(Graphics graphics)
+        {
+            this.graphics = graphics;
+        }
+
+        public virtual Graphics GetGraphics()
+        {
+            return this.graphics;
         }
 
         public void Select()

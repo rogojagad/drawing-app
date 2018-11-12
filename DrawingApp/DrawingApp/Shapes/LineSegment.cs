@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -14,10 +15,14 @@ namespace DrawingApp.Shapes
 
         private Pen pen;
 
+        private List<DrawingObject> drawingObjects;
+
         public LineSegment()
         {
             this.pen = new Pen(Color.Black);
             pen.Width = 1.5f;
+
+            drawingObjects = new List<DrawingObject>();
         }
 
         public LineSegment(Point startpoint) :
@@ -38,10 +43,15 @@ namespace DrawingApp.Shapes
             pen.Width = 1.5f;
             pen.DashStyle = DashStyle.Solid;
 
-            if (this.Graphics != null)
+            if (this.GetGraphics() != null)
             {
-                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                this.Graphics.DrawLine(pen, this.Startpoint, this.Endpoint);
+                this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
+                this.GetGraphics().DrawLine(pen, this.Startpoint, this.Endpoint);
+
+                foreach (DrawingObject obj in drawingObjects)
+                {
+                    obj.Draw();
+                }
             }
         }
 
@@ -51,10 +61,15 @@ namespace DrawingApp.Shapes
             pen.Width = 1.5f;
             pen.DashStyle = DashStyle.Solid;
 
-            if (this.Graphics != null)
+            if (this.GetGraphics() != null)
             {
-                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                this.Graphics.DrawLine(pen, this.Startpoint, this.Endpoint);
+                this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
+                this.GetGraphics().DrawLine(pen, this.Startpoint, this.Endpoint);
+
+                foreach (DrawingObject obj in drawingObjects)
+                {
+                    obj.Draw();
+                }
             }
         }
 
@@ -64,10 +79,15 @@ namespace DrawingApp.Shapes
             pen.Width = 1.5f;
             pen.DashStyle = DashStyle.DashDotDot;
 
-            if (this.Graphics != null)
+            if (this.GetGraphics() != null)
             {
-                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                this.Graphics.DrawLine(pen, this.Startpoint, this.Endpoint);
+                this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
+                this.GetGraphics().DrawLine(pen, this.Startpoint, this.Endpoint);
+
+                foreach (DrawingObject obj in drawingObjects)
+                {
+                    obj.Draw();
+                }
             }
         }
 
@@ -95,6 +115,16 @@ namespace DrawingApp.Shapes
         public double GetSlope()
         {
             return (double)(Endpoint.Y - Startpoint.Y) / (double)(Endpoint.X - Startpoint.X);
+        }
+
+        public override void Add(DrawingObject obj)
+        {
+            this.drawingObjects.Add(obj);
+        }
+
+        public override void Remove(DrawingObject obj)
+        {
+            this.drawingObjects.Remove(obj);
         }
     }
 }

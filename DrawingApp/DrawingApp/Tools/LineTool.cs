@@ -81,5 +81,10 @@ namespace DrawingApp.Tools
                 }
             }
         }
+
+        public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

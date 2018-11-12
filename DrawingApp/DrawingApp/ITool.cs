@@ -16,5 +16,6 @@ namespace DrawingApp
         void ToolMouseDown(object sender, MouseEventArgs e);
         void ToolMouseUp(object sender, MouseEventArgs e);
         void ToolMouseMove(object sender, MouseEventArgs e);
+        void ToolMouseDoubleClick(object sender, MouseEventArgs e);
     }
 }

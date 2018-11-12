@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DrawingApp.Shapes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -75,6 +76,14 @@ namespace DrawingApp.Tools
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
             
+        }
+
+        public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Text text = new Text();
+            text.Value = "Hello world";
+            selectedObject.Add(text);
+            Debug.WriteLine("Double click on selection tool");
         }
     }
 }
