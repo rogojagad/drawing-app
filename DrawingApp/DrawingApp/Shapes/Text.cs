@@ -24,14 +24,14 @@ namespace DrawingApp.Shapes
             );
         }
 
-        public override void Add(DrawingObject obj)
+        public override bool Add(DrawingObject obj)
         {
-            
+            return false;
         }
 
-        public override void Remove(DrawingObject obj)
+        public override bool Remove(DrawingObject obj)
         {
-            
+            return false;
         }
 
         public override bool Intersect(int xTest, int yTest)

@@ -47,9 +47,24 @@ namespace DrawingApp.Tools
             if (e.Button == MouseButtons.Left)
             {
                 text = new Text();
-                text.Value = "Text";
-                text.Position = new System.Drawing.PointF(e.X, e.Y);
-                canvas.AddDrawingObject(text);
+                text.Value = "Lorem Ipsum";
+                text.Position = new System.Drawing.PointF((float) e.X, (float)e.Y);
+
+                DrawingObject obj = canvas.GetObjectAt(e.X, e.Y);
+
+                if (obj == null)
+                {
+                    canvas.AddDrawingObject(text);
+                }
+                else
+                {
+                    bool allowed = obj.Add(text);
+
+                    if (!allowed)
+                    {
+                        canvas.AddDrawingObject(obj);
+                    }
+                }
             }
         }
 

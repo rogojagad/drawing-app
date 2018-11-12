@@ -100,14 +100,14 @@ namespace DrawingApp.Shapes
             return (double)(Endpoint.Y - Startpoint.Y) / (double)(Endpoint.X - Startpoint.X);
         }
 
-        public override void Add(DrawingObject obj)
+        public override bool Add(DrawingObject obj)
         {
-            
+            return false;   
         }
 
-        public override void Remove(DrawingObject obj)
+        public override bool Remove(DrawingObject obj)
         {
-            
+            return false;
         }
     }
 }
