@@ -18,6 +18,7 @@ namespace DrawingApp
 
         DrawingObject GetObjectAt(int x, int y);
         DrawingObject SelectObjectAt(int x, int y);
+        List<DrawingObject> GetDrawingObjects();
         void DeselectAllObjects();
     }
 }

@@ -84,5 +84,25 @@ namespace DrawingApp.Tools
                 }
             }           
         }
+
+        public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        public void ToolKeyUp(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        public void ToolKeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        public void ToolHotKeysDown(object sender, Keys e)
+        {
+
+        }
     }
 }

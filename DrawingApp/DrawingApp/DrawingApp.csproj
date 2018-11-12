@@ -91,8 +91,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shapes\DrawingGroup.cs" />
     <Compile Include="Shapes\LineSegment.cs" />
     <Compile Include="Shapes\Rectangle.cs" />
+    <Compile Include="Shapes\Text.cs" />
     <Compile Include="States\EditState.cs" />
     <Compile Include="States\PreviewState.cs" />
     <Compile Include="States\StaticState.cs" />
@@ -106,6 +108,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Tools\RectangleTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\TextTool.cs">
       <SubType>Component</SubType>
     </Compile>
     <EmbeddedResource Include="CursorSet.resx">

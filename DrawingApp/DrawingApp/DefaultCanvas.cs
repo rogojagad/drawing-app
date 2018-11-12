@@ -28,6 +28,81 @@ namespace DrawingApp
             this.MouseDown += DefaultCanvas_MouseDown;
             this.MouseUp += DefaultCanvas_MouseUp;
             this.MouseMove += DefaultCanvas_MouseMove;
+            this.MouseDoubleClick += DefaultCanvas_MouseDoubleClick;
+
+            this.KeyDown += DefaultCanvas_KeyDown;
+            this.KeyUp += DefaultCanvas_KeyUp;
+            this.PreviewKeyDown += DefaultCanvas_PreviewKeyDown;
+        }
+
+        private void DefaultCanvas_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.ControlKey:
+                    e.IsInputKey = true;
+                    break;
+                case Keys.Up:
+                    e.IsInputKey = true;
+                    break;
+                case Keys.Down:
+                    e.IsInputKey = true;
+                    break;
+                case Keys.Left:
+                    e.IsInputKey = true;
+                    break;
+                case Keys.Right:
+                    e.IsInputKey = true;
+                    break;
+            }
+        }
+
+        private void DefaultCanvas_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (this.activeTool != null)
+            {
+                this.activeTool.ToolKeyUp(sender, e);
+            }
+        }
+
+        private void DefaultCanvas_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (this.activeTool != null)
+            {
+                this.activeTool.ToolKeyDown(sender, e);
+            }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            const int WM_KEYDOWN = 0x100;
+            const int WM_SYSKEYDOWN = 0x104;
+
+            if ((msg.Msg == WM_KEYDOWN) || (msg.Msg == WM_SYSKEYDOWN))
+            {
+                switch (keyData)
+                {
+                    case Keys.Control | Keys.G:
+                        Debug.WriteLine("CTRL + G");
+                        if (this.activeTool != null)
+                        {
+                            this.activeTool.ToolHotKeysDown(this, Keys.Control | Keys.G);
+                            this.Repaint();
+                        }
+                        break;
+                }
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void DefaultCanvas_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (this.activeTool != null)
+            {
+                this.activeTool.ToolMouseDoubleClick(sender, e);
+                this.Repaint();
+            }
         }
 
         private void DefaultCanvas_MouseMove(object sender, MouseEventArgs e)
@@ -61,7 +136,7 @@ namespace DrawingApp
         {
             foreach (DrawingObject obj in drawingObjects)
             {
-                obj.Graphics = e.Graphics;
+                obj.SetGraphics(e.Graphics);
                 obj.Draw();
             }
         }
@@ -126,5 +201,11 @@ namespace DrawingApp
                 obj.Deselect();
             }
         }
+
+        public List<DrawingObject> GetDrawingObjects()
+        {
+            return this.drawingObjects;
+        }
+
     }
 }
