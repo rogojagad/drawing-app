@@ -9,7 +9,7 @@ namespace DrawingApp
     {
         public Guid ID { get; set; }
 
-        private DrawingState state;
+        protected DrawingState state;
         private Graphics graphics;
 
         public DrawingState State
@@ -36,7 +36,7 @@ namespace DrawingApp
         public abstract void RenderOnEditingView();
         public abstract void RenderOnStaticView();
 
-        public void ChangeState(DrawingState state)
+        public virtual void ChangeState(DrawingState state)
         {
             this.state = state;
         }

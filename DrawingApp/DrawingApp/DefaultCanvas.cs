@@ -29,6 +29,7 @@ namespace DrawingApp
             this.MouseUp += DefaultCanvas_MouseUp;
             this.MouseMove += DefaultCanvas_MouseMove;
             this.MouseDoubleClick += DefaultCanvas_MouseDoubleClick;
+
             this.KeyDown += DefaultCanvas_KeyDown;
             this.KeyUp += DefaultCanvas_KeyUp;
             this.PreviewKeyDown += DefaultCanvas_PreviewKeyDown;
@@ -200,5 +201,11 @@ namespace DrawingApp
                 obj.Deselect();
             }
         }
+
+        public List<DrawingObject> GetDrawingObjects()
+        {
+            return this.drawingObjects;
+        }
+
     }
 }

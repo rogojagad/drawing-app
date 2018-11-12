@@ -1,4 +1,5 @@
 ﻿using DrawingApp.Shapes;
+using DrawingApp.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,9 @@ namespace DrawingApp.Tools
         private DrawingObject selectedObject;
         private int xInitial;
         private int yInitial;
+
+        private bool multiselectState = false;
+        private List<DrawingObject> selectedObjects = new List<DrawingObject>();
 
         public Cursor Cursor
         {
@@ -49,11 +53,42 @@ namespace DrawingApp.Tools
         {
             this.xInitial = e.X;
             this.yInitial = e.Y;
-
+            Debug.WriteLine(this.multiselectState);
             if (e.Button == MouseButtons.Left && canvas != null)
             {
-                canvas.DeselectAllObjects();
-                this.selectedObject = canvas.SelectObjectAt(e.X, e.Y);
+                if (! multiselectState)
+                {
+                    canvas.DeselectAllObjects();
+                    this.selectedObjects.Clear();
+                }
+
+                //this.selectedObject = canvas.SelectObjectAt(e.X, e.Y);
+
+                if (this.selectedObject != null && !multiselectState)
+                {
+                    this.selectedObject.ChangeState(StaticState.GetInstance());
+                }
+
+                foreach (DrawingObject obj in this.canvas.GetDrawingObjects())
+                {
+                    if (obj.Intersect(e.X, e.Y))
+                    {
+                        if (! this.multiselectState)
+                        {
+                            this.selectedObjects.Clear();
+                        }
+                        else
+                        {
+                            //if (!selectedObjects.Any()) selectedObjects.Add(this.selectedObject);
+                            this.selectedObjects.Add(obj);
+                        }
+                        Debug.WriteLine(this.selectedObjects.Count());
+                        this.selectedObject = obj;
+                        obj.ChangeState(EditState.GetInstance());
+                        break;
+                    }
+                }
+                
             }
         }
 
@@ -88,17 +123,39 @@ namespace DrawingApp.Tools
         
         public void ToolKeyUp(object sender, KeyEventArgs e)
         {
-
+            if (e.KeyCode == System.Windows.Forms.Keys.ShiftKey)
+            {
+                this.multiselectState = false;
+            }
         }
 
         public void ToolKeyDown(object sender, KeyEventArgs e)
         {
+            //Debug.WriteLine(e.KeyCode);
 
+            if (e.KeyCode == System.Windows.Forms.Keys.ShiftKey)
+            {
+                this.multiselectState = true;
+            }
         }
 
         public void ToolHotKeysDown(object sender, Keys e)
         {
+            if (this.selectedObjects.Count() > 0)
+            {
+                Debug.WriteLine("Grouping started");
 
+                DrawingGroup drawingGroup = new DrawingGroup();
+
+                foreach (DrawingObject obj in this.selectedObjects)
+                {
+                    drawingGroup.Add(obj);
+                }
+
+                drawingGroup.ChangeState(EditState.GetInstance());
+                this.canvas.AddDrawingObject(drawingGroup);
+                this.selectedObject = drawingGroup;
+            }
         }
     }
 }
