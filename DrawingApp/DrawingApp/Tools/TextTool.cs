@@ -77,5 +77,20 @@ namespace DrawingApp.Tools
         {
 
         }
+
+        public void ToolKeyUp(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        public void ToolKeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        public void ToolHotKeysDown(object sender, Keys e)
+        {
+
+        }
     }
 }
