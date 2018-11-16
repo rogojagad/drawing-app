@@ -69,7 +69,7 @@ namespace DrawingApp.Tools
                     this.selectedObject.ChangeState(StaticState.GetInstance());
                 }
 
-                foreach (DrawingObject obj in this.canvas.GetDrawingObjects())
+                foreach (DrawingObject obj in this.canvas.GetDrawingObjects().Reverse<DrawingObject>())
                 {
                     if (obj.Intersect(e.X, e.Y))
                     {
