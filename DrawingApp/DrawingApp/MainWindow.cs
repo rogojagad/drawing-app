@@ -79,6 +79,7 @@ namespace DrawingApp
             this.toolbox.AddTool(new LineTool());
             this.toolbox.AddTool(new RectangleTool());
             this.toolbox.AddTool(new TextTool());
+            this.toolbox.AddTool(new ConnectorTool());
             this.toolbox.ToolSelected += Toolbox_ToolSelected;
 
             #endregion

@@ -5,12 +5,15 @@ using System.Drawing.Drawing2D;
 
 namespace DrawingApp.Shapes
 {
-    public class Rectangle : DrawingObject
+    public class Rectangle : DrawingObject, IObservable
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public Point CenterPoint { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+
+        List<IObserver> observerList = new List<IObserver>();
 
         private Pen pen;
         private List<DrawingObject> drawingObjects;
@@ -32,6 +35,14 @@ namespace DrawingApp.Shapes
         {
             this.Width = width;
             this.Height = height;
+        }
+
+        public void SetCenterPoint()
+        {
+            int Xcenter = this.X + this.Width / 2;
+            int Ycenter = this.Y + this.Height / 2;
+
+            this.CenterPoint = new System.Drawing.Point(Xcenter, Ycenter);
         }
 
         public override bool Intersect(int xTest, int yTest)
@@ -56,6 +67,8 @@ namespace DrawingApp.Shapes
                 obj.SetGraphics(GetGraphics());
                 obj.RenderOnStaticView();
             }
+
+            this.NotifyObserver();
         }
 
         public override void RenderOnStaticView()
@@ -69,6 +82,8 @@ namespace DrawingApp.Shapes
                 obj.SetGraphics(GetGraphics());
                 obj.RenderOnStaticView();
             }
+
+            this.NotifyObserver();
         }
 
         public override void RenderOnPreview()
@@ -82,12 +97,16 @@ namespace DrawingApp.Shapes
                 obj.SetGraphics(GetGraphics());
                 obj.RenderOnStaticView();
             }
+
+            this.NotifyObserver();
         }
 
         public override void Translate(int x, int y, int xAmount, int yAmount)
         {
             this.X += xAmount;
             this.Y += yAmount;
+
+            this.SetCenterPoint();
 
             foreach (DrawingObject obj in this.drawingObjects)
             {
@@ -105,6 +124,24 @@ namespace DrawingApp.Shapes
         {
             drawingObjects.Remove(obj);
             return true;
+        }
+
+        public void AddObserver(IObserver observer)
+        {
+            this.observerList.Add(observer);
+        }
+
+        public void RemoveObserver(IObserver observer)
+        {
+            observerList.Remove(observer);
+        }
+
+        public void NotifyObserver()
+        {
+            foreach(IObserver observer in this.observerList)
+            {
+                observer.Update();
+            }
         }
     }
 }
