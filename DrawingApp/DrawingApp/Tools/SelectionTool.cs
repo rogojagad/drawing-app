@@ -115,9 +115,6 @@ namespace DrawingApp.Tools
 
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Text text = new Text();
-            text.Value = "Hello world";
-            selectedObject.Add(text);
             Debug.WriteLine("Double click on selection tool");
         }
         
