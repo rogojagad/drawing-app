@@ -93,6 +93,8 @@ namespace DrawingApp.Shapes
         {
             this.Startpoint = new Point(this.Startpoint.X + xAmount, this.Startpoint.Y + yAmount);
             this.Endpoint = new Point(this.Endpoint.X + xAmount, this.Endpoint.Y + yAmount);
+            
+            this.SetCornerPoints();
         }
 
         public double GetSlope()
@@ -112,10 +114,15 @@ namespace DrawingApp.Shapes
 
         public override void SetCornerPoints()
         {
+            if(this.CornerPoints.Count != 0)
+            {
+                this.CornerPoints.Clear();
+            }
+
             this.CornerPoints.Add(this.Startpoint);
             this.CornerPoints.Add(this.Endpoint);
 
-            Debug.WriteLine("Corner Points are set");
+            Debug.WriteLine("Corner Points are set with " + this.CornerPoints[0].X + " " + this.CornerPoints[0].Y);
         }
     }
 }

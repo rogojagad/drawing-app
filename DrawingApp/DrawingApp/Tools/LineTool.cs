@@ -74,7 +74,7 @@ namespace DrawingApp.Tools
                 {
                     lineSegment.Endpoint = new System.Drawing.Point(e.X, e.Y);
                     lineSegment.SetCornerPoints();
-                    lineSegment.Select();
+                    lineSegment.Select();                    
                 }
                 else if (e.Button == MouseButtons.Right)
                 {
