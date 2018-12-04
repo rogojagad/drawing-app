@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace DrawingApp
 {
@@ -10,7 +11,9 @@ namespace DrawingApp
         public Guid ID { get; set; }
 
         protected DrawingState state;
+
         private Graphics graphics;
+        private List<Point> CornerPoints = new List<Point>();
 
         public DrawingState State
         {
@@ -26,8 +29,11 @@ namespace DrawingApp
             this.ChangeState(PreviewState.GetInstance());
         }
 
-        public abstract bool Add(DrawingObject obj);
-        public abstract bool Remove(DrawingObject obj);
+        public abstract bool AddDrawingObject(DrawingObject obj);
+        public abstract bool RemoveDrawingObject(DrawingObject obj);
+
+        public abstract void SetCornerPoints();
+        public abstract List<Point> GetCornerPoints();
 
         public abstract bool Intersect(int xTest, int yTest);
         public abstract void Translate(int x, int y, int xAmount, int yAmount);
