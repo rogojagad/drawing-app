@@ -11,9 +11,9 @@ namespace DrawingApp
         public Guid ID { get; set; }
 
         protected DrawingState state;
+        protected List<Point> CornerPoints = new List<Point>();
 
         private Graphics graphics;
-        private List<Point> CornerPoints = new List<Point>();
 
         public DrawingState State
         {
@@ -33,7 +33,6 @@ namespace DrawingApp
         public abstract bool RemoveDrawingObject(DrawingObject obj);
 
         public abstract void SetCornerPoints();
-        public abstract List<Point> GetCornerPoints();
 
         public abstract bool Intersect(int xTest, int yTest);
         public abstract void Translate(int x, int y, int xAmount, int yAmount);
@@ -72,6 +71,11 @@ namespace DrawingApp
         {
             Debug.WriteLine("ID" + ID.ToString() + "is deselected");
             this.state.Deselect(this);
+        }
+
+        public virtual List<Point> GetCornerPoints()
+        {
+            return this.CornerPoints;
         }
     }
 }
