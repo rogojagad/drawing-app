@@ -110,12 +110,12 @@ namespace DrawingApp.Shapes
             return (double)(Endpoint.Y - Startpoint.Y) / (double)(Endpoint.X - Startpoint.X);
         }
 
-        public override bool Add(DrawingObject obj)
+        public override bool AddDrawingObject(DrawingObject obj)
         {
             return false;   
         }
 
-        public override bool Remove(DrawingObject obj)
+        public override bool RemoveDrawingObject(DrawingObject obj)
         {
             return false;
         }
@@ -125,6 +125,11 @@ namespace DrawingApp.Shapes
             this.Startpoint = new Point(this.Source.CenterPoint.X, this.Source.CenterPoint.Y);
 
             this.Endpoint = new Point(this.Destination.CenterPoint.X, this.Destination.CenterPoint.Y);
+        }
+
+        public override void SetCornerPoints()
+        {
+            throw new NotImplementedException();
         }
     }
 }

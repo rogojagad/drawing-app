@@ -114,13 +114,13 @@ namespace DrawingApp.Shapes
             }
         }
 
-        public override bool Add(DrawingObject obj)
+        public override bool AddDrawingObject(DrawingObject obj)
         {
             drawingObjects.Add(obj);
             return true;
         }
 
-        public override bool Remove(DrawingObject obj)
+        public override bool RemoveDrawingObject(DrawingObject obj)
         {
             drawingObjects.Remove(obj);
             return true;
@@ -142,6 +142,11 @@ namespace DrawingApp.Shapes
             {
                 observer.Update();
             }
+        }
+
+        public override void SetCornerPoints()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

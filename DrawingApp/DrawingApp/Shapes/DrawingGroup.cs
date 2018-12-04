@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,13 +59,13 @@ namespace DrawingApp.Shapes
             }
         }
 
-        public override bool Add(DrawingObject obj)
+        public override bool AddDrawingObject(DrawingObject obj)
         {
             this.drawingObjects.Add(obj);
             return true;
         }
 
-        public override bool Remove(DrawingObject obj)
+        public override bool RemoveDrawingObject(DrawingObject obj)
         {
             return false;
         }
@@ -82,6 +83,11 @@ namespace DrawingApp.Shapes
         public override void RenderOnStaticView()
         {
             
+        }
+
+        public override void SetCornerPoints()
+        {
+            throw new NotImplementedException();
         }
     }
 }
