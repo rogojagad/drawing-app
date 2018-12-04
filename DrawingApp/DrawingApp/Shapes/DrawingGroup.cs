@@ -29,6 +29,14 @@ namespace DrawingApp.Shapes
             }
         }
 
+        public override void Select()
+        {
+            foreach (DrawingObject obj in this.drawingObjects)
+            {
+                obj.Select();
+            }
+        }
+
         public override bool Intersect(int xTest, int yTest)
         {
             foreach (DrawingObject obj in this.drawingObjects)

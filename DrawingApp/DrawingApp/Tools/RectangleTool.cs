@@ -65,6 +65,8 @@ namespace DrawingApp.Tools
                     {
                         this.rectangle.Width = width;
                         this.rectangle.Height = height;
+
+                        this.rectangle.SetCenterPoint();
                     }
                 }
             }
@@ -77,6 +79,9 @@ namespace DrawingApp.Tools
                 if (e.Button == MouseButtons.Left)
                 {
                     this.rectangle.Select();
+
+                    Debug.WriteLine(this.rectangle.CenterPoint.X);
+                    Debug.WriteLine(this.rectangle.CenterPoint.Y);
                 }
                 else if (e.Button == MouseButtons.Right)
                 {

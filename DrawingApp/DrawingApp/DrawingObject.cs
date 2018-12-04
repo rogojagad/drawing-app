@@ -56,13 +56,13 @@ namespace DrawingApp
             return this.graphics;
         }
 
-        public void Select()
+        public virtual void Select()
         {
             Debug.WriteLine("ID" + ID.ToString() + "is selected");
             this.state.Select(this);
         }
 
-        public void Deselect()
+        public virtual void Deselect()
         {
             Debug.WriteLine("ID" + ID.ToString() + "is deselected");
             this.state.Deselect(this);
