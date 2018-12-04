@@ -146,7 +146,7 @@ namespace DrawingApp.Tools
 
                 foreach (DrawingObject obj in this.selectedObjects)
                 {
-                    drawingGroup.Add(obj);
+                    drawingGroup.AddDrawingObject(obj);
                 }
 
                 drawingGroup.ChangeState(EditState.GetInstance());
