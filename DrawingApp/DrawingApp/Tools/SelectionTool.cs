@@ -54,6 +54,7 @@ namespace DrawingApp.Tools
             this.xInitial = e.X;
             this.yInitial = e.Y;
             Debug.WriteLine(this.multiselectState);
+            
             if (e.Button == MouseButtons.Left && canvas != null)
             {
                 if (! multiselectState)
@@ -104,6 +105,7 @@ namespace DrawingApp.Tools
                     yInitial = e.Y;
 
                     selectedObject.Translate(e.X, e.Y, xAmount, yAmount);
+                    this.canvas.CheckAlignedObjects(this.selectedObject);
                 }
             }
         }

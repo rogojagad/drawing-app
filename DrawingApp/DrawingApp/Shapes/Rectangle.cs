@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Drawing.Drawing2D;
 
 namespace DrawingApp.Shapes

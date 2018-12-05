@@ -207,5 +207,46 @@ namespace DrawingApp
             return this.drawingObjects;
         }
 
+        public void CheckAlignedObjects(DrawingObject activeObject)
+        {
+            Guid activeObjID = activeObject.ID;
+
+            List<Point> activeObjCornerPoints = new List<Point>();
+            List<Point> storedObjectCornerPoints = new List<Point>();
+
+            activeObjCornerPoints.AddRange(activeObject.GetCornerPoints());
+            storedObjectCornerPoints.AddRange(this.GetStoredObjectsCornerPoints(activeObjID));
+
+            foreach (Point activeObjPoint in activeObjCornerPoints)
+            {
+                foreach (Point storedObjPoint in storedObjectCornerPoints)
+                {
+                    if( activeObjPoint.X == storedObjPoint.X )
+                    {
+                        Debug.WriteLine("X is same");
+                    }
+
+                    if (activeObjPoint.Y == storedObjPoint.Y)
+                    {
+                        Debug.WriteLine("Y is same");
+                    }
+                }
+            }
+        }
+
+        public List<Point> GetStoredObjectsCornerPoints(Guid activeObjID)
+        {
+            List<Point> storedObjectCornerPoints = new List<Point>();
+
+            foreach (DrawingObject obj in this.drawingObjects)
+            {
+                if (obj.ID != activeObjID)
+                {
+                    storedObjectCornerPoints.AddRange(obj.GetCornerPoints());
+                }
+            }
+
+            return storedObjectCornerPoints;
+        }
     }
 }
