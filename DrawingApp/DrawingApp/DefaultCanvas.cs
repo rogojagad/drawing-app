@@ -11,7 +11,6 @@ namespace DrawingApp
     {
         private ITool activeTool;
         private List<DrawingObject> drawingObjects;
-        private Dictionary<Guid, List<Point>> CornerPointsByGuid;
 
         public DefaultCanvas()
         {
@@ -21,7 +20,6 @@ namespace DrawingApp
         private void Init()
         {
             this.drawingObjects = new List<DrawingObject>();
-            this.CornerPointsByGuid = new Dictionary<Guid, List<Point>>();
             this.DoubleBuffered = true;
 
             this.BackColor = Color.White;
@@ -166,7 +164,7 @@ namespace DrawingApp
             this.drawingObjects.Add(drawingObject);
 
             this.Repaint();
-
+            /*
             if(! this.CornerPointsByGuid.ContainsKey(drawingObject.ID))
             {
                 if (drawingObject.GetType() != typeof(GuidingLine))
@@ -174,6 +172,7 @@ namespace DrawingApp
                     this.StoreObjectCornerPoints(drawingObject);
                 }
             }
+            */
         }
 
         public void RemoveDrawingObject(DrawingObject drawingObject)
@@ -222,9 +221,25 @@ namespace DrawingApp
         public void CheckAlignedObjects(DrawingObject activeObject)
         {
             Graphics g = this.CreateGraphics();
+
+            foreach(Point activeObjPoint in activeObject.GetCornerPoints())
+            {
+                foreach(Point storedObjPoint in this.GetStoredObjectPoints(activeObject.ID))
+                {
+                    if( activeObjPoint.X == storedObjPoint.X )
+                    {
+                        this.ShowGuideLine(new Point(activeObjPoint.X, 0), new Point(activeObjPoint.X, 1000), g);
+                    }
+                    else if (activeObjPoint.Y == storedObjPoint.Y)
+                    {
+                        this.ShowGuideLine(new Point(0, activeObjPoint.Y), new Point(1000, activeObjPoint.Y), g);
+                    }
+                }
+            }
+
             //this.ShowGuideLine(new Point(100, 0), new Point(100, 100), g);
             //Debug.WriteLine(this.drawingObjects.Count);
-            
+            /*
             foreach (KeyValuePair<Guid, List<Point>> entry in this.CornerPointsByGuid)
             {
                 if( entry.Key != activeObject.ID )
@@ -248,6 +263,7 @@ namespace DrawingApp
                     }
                 }
             }
+            */
            
         }
 
@@ -277,9 +293,19 @@ namespace DrawingApp
             }
         }
 
-        private void StoreObjectCornerPoints(DrawingObject obj)
+        private List<Point> GetStoredObjectPoints(Guid activeObjId)
         {
-            this.CornerPointsByGuid.Add(obj.ID, obj.GetCornerPoints());
+            List<Point> storedObjPoints = new List<Point>();
+
+            foreach(DrawingObject obj in this.drawingObjects)
+            {
+                if(obj.ID != activeObjId)
+                {
+                    storedObjPoints.AddRange(obj.GetCornerPoints());
+                }
+            }
+
+            return storedObjPoints;
         }
     }
 }
