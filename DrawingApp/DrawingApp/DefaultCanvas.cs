@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using DrawingApp.Shapes;
 
 namespace DrawingApp
 {
@@ -161,7 +162,7 @@ namespace DrawingApp
         {
             this.drawingObjects.Add(drawingObject);
             this.Repaint();
-            Debug.WriteLine("New drawing object");
+            Debug.WriteLine("Drawing object added");
         }
 
         public void RemoveDrawingObject(DrawingObject drawingObject)
@@ -209,6 +210,10 @@ namespace DrawingApp
 
         public void CheckAlignedObjects(DrawingObject activeObject)
         {
+            Graphics g = this.CreateGraphics();
+
+            GuidingLine guidingLine = GuidingLine.GetInstance();
+
             Guid activeObjID = activeObject.ID;
 
             List<Point> activeObjCornerPoints = new List<Point>();
@@ -223,14 +228,32 @@ namespace DrawingApp
                 {
                     if( activeObjPoint.X == storedObjPoint.X )
                     {
-                        Debug.WriteLine("X is same");
+                        this.ShowGuideLine( new Point(activeObjPoint.X, 0), new Point(activeObjPoint.X, 500), guidingLine, g);
                     }
-
-                    if (activeObjPoint.Y == storedObjPoint.Y)
+                    else if (activeObjPoint.Y == storedObjPoint.Y)
                     {
-                        Debug.WriteLine("Y is same");
+                        this.ShowGuideLine(new Point(0, activeObjPoint.Y), new Point(500, activeObjPoint.Y), guidingLine, g);
+                    }
+                    else
+                    {
+                        this.DismissGuideLine(guidingLine);
                     }
                 }
+            }
+        }
+
+        private void ShowGuideLine(Point startpoint, Point endpoint, GuidingLine guideLine, Graphics g)
+        {
+            this.AddDrawingObject(guideLine);
+            guideLine.Draw(startpoint, endpoint, g);
+        }
+
+        private void DismissGuideLine(GuidingLine guideLine)
+        {
+            if( this.drawingObjects.Contains(guideLine) )
+            {
+                this.drawingObjects.Remove(guideLine);
+                Debug.WriteLine("Object " + guideLine.ToString() + " removed from canvas");
             }
         }
 

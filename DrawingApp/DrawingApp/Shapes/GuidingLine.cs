@@ -31,16 +31,24 @@ namespace DrawingApp.Shapes
             return instance;
         }
 
-        public void Draw(Point startpoint, Point endpoint)
+        public void Draw(Point startpoint, Point endpoint, Graphics g)
         {/*
             Debug.WriteLine("Ada 2 objek dalam satu garis");
             */
 
+            this.SetGraphics(g);
+
             if (this.GetGraphics() != null)
             {
-                this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
-                this.GetGraphics().DrawLine(this.pen, startpoint, endpoint);
-
+                try
+                {
+                    //Debug.WriteLine(startpoint.ToString());
+                    this.GetGraphics().DrawLine(this.pen, startpoint, endpoint);
+                }   
+                catch (System.ArgumentException ex)
+                {
+                    Debug.WriteLine(ex.ToString());
+                }
             }
         }
 

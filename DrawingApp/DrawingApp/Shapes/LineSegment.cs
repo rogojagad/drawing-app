@@ -121,8 +121,6 @@ namespace DrawingApp.Shapes
 
             this.CornerPoints.Add(this.Startpoint);
             this.CornerPoints.Add(this.Endpoint);
-
-            Debug.WriteLine("Corner Points are set with " + this.CornerPoints[0].X + " " + this.CornerPoints[0].Y);
         }
     }
 }
