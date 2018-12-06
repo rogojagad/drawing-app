@@ -21,6 +21,5 @@ namespace DrawingApp
         List<DrawingObject> GetDrawingObjects();
         void DeselectAllObjects();
         void CheckAlignedObjects(DrawingObject activeObject);
-        List<Point> GetStoredObjectsCornerPoints(Guid activeObjectID);
     }
 }

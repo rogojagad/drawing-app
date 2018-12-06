@@ -9,8 +9,10 @@ namespace DrawingApp.Shapes
 {
     class GuidingLine : DrawingObject
     {
-        private Pen pen;
+        public Point Startpoint;
+        public Point Endpoint;
 
+        private Pen pen;       
         private static GuidingLine instance;
 
         private GuidingLine()
@@ -20,32 +22,30 @@ namespace DrawingApp.Shapes
             pen.Width = 1.5f;
             pen.DashStyle = DashStyle.DashDotDot;
         }
-
+        
         public static GuidingLine GetInstance()
         {
             if (instance == null)
             {
                 instance = new GuidingLine();
+                
             }
 
             return instance;
         }
-
-        public void Draw(Point startpoint, Point endpoint, Graphics g)
-        {/*
-            Debug.WriteLine("Ada 2 objek dalam satu garis");
-            */
-
-            this.SetGraphics(g);
-
+        
+        public void DrawLogic()
+        {
             if (this.GetGraphics() != null)
             {
                 try
                 {
-                    //Debug.WriteLine(startpoint.ToString());
-                    this.GetGraphics().DrawLine(this.pen, startpoint, endpoint);
-                }   
-                catch (System.ArgumentException ex)
+                    Debug.WriteLine(this.GetGraphics().ToString());
+                    this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
+                    this.GetGraphics().DrawLine(this.pen, this.Startpoint, this.Endpoint);
+                    Debug.WriteLine(this.GetGraphics().SmoothingMode);
+                }
+                catch (ArgumentException ex)
                 {
                     Debug.WriteLine(ex.ToString());
                 }
@@ -74,7 +74,7 @@ namespace DrawingApp.Shapes
 
         public override void RenderOnPreview()
         {
-            
+            this.DrawLogic();
         }
 
         public override void RenderOnStaticView()

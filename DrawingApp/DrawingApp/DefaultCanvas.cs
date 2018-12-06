@@ -11,6 +11,7 @@ namespace DrawingApp
     {
         private ITool activeTool;
         private List<DrawingObject> drawingObjects;
+        private Dictionary<Guid, List<Point>> CornerPointsByGuid;
 
         public DefaultCanvas()
         {
@@ -20,6 +21,7 @@ namespace DrawingApp
         private void Init()
         {
             this.drawingObjects = new List<DrawingObject>();
+            this.CornerPointsByGuid = new Dictionary<Guid, List<Point>>();
             this.DoubleBuffered = true;
 
             this.BackColor = Color.White;
@@ -160,9 +162,18 @@ namespace DrawingApp
 
         public void AddDrawingObject(DrawingObject drawingObject)
         {
+            
             this.drawingObjects.Add(drawingObject);
+
             this.Repaint();
-            Debug.WriteLine("Drawing object added");
+
+            if(! this.CornerPointsByGuid.ContainsKey(drawingObject.ID))
+            {
+                if (drawingObject.GetType() != typeof(GuidingLine))
+                {
+                    this.StoreObjectCornerPoints(drawingObject);
+                }
+            }
         }
 
         public void RemoveDrawingObject(DrawingObject drawingObject)
@@ -211,65 +222,64 @@ namespace DrawingApp
         public void CheckAlignedObjects(DrawingObject activeObject)
         {
             Graphics g = this.CreateGraphics();
-
-            GuidingLine guidingLine = GuidingLine.GetInstance();
-
-            Guid activeObjID = activeObject.ID;
-
-            List<Point> activeObjCornerPoints = new List<Point>();
-            List<Point> storedObjectCornerPoints = new List<Point>();
-
-            activeObjCornerPoints.AddRange(activeObject.GetCornerPoints());
-            storedObjectCornerPoints.AddRange(this.GetStoredObjectsCornerPoints(activeObjID));
-
-            foreach (Point activeObjPoint in activeObjCornerPoints)
+            //this.ShowGuideLine(new Point(100, 0), new Point(100, 100), g);
+            //Debug.WriteLine(this.drawingObjects.Count);
+            
+            foreach (KeyValuePair<Guid, List<Point>> entry in this.CornerPointsByGuid)
             {
-                foreach (Point storedObjPoint in storedObjectCornerPoints)
+                if( entry.Key != activeObject.ID )
                 {
-                    if( activeObjPoint.X == storedObjPoint.X )
+                    foreach (Point pointStored in entry.Value)
                     {
-                        this.ShowGuideLine( new Point(activeObjPoint.X, 0), new Point(activeObjPoint.X, 500), guidingLine, g);
-                    }
-                    else if (activeObjPoint.Y == storedObjPoint.Y)
-                    {
-                        this.ShowGuideLine(new Point(0, activeObjPoint.Y), new Point(500, activeObjPoint.Y), guidingLine, g);
-                    }
-                    else
-                    {
-                        this.DismissGuideLine(guidingLine);
+                        foreach (Point activePoint in activeObject.GetCornerPoints())
+                        {
+                            if (pointStored.X == activePoint.X)
+                            {
+                                Debug.WriteLine("Segaris di X");
+                                this.ShowGuideLine(new Point(activePoint.X, 0), new Point(activePoint.X, 1000), g);
+                            }
+                            else if (pointStored.Y == activePoint.Y)
+                            {
+                                Debug.WriteLine("Segaris di Y");
+                                this.ShowGuideLine(new Point(0, activePoint.Y), new Point(1000, activePoint.Y), g);
+                            }
+                            
+                        }
                     }
                 }
             }
+           
         }
 
-        private void ShowGuideLine(Point startpoint, Point endpoint, GuidingLine guideLine, Graphics g)
+        private void ShowGuideLine(Point startpoint, Point endpoint, Graphics g)
         {
-            this.AddDrawingObject(guideLine);
-            guideLine.Draw(startpoint, endpoint, g);
+            GuidingLine guideLine = GuidingLine.GetInstance();
+
+            guideLine.Startpoint = startpoint;
+            guideLine.Endpoint = endpoint;
+            guideLine.SetGraphics(g);
+
+            if (! this.drawingObjects.Contains(guideLine))
+            {
+                this.AddDrawingObject(guideLine);
+            }
+
+            guideLine.Draw();
         }
 
         private void DismissGuideLine(GuidingLine guideLine)
         {
             if( this.drawingObjects.Contains(guideLine) )
             {
-                this.drawingObjects.Remove(guideLine);
+                //this.drawingObjects.Remove(guideLine);
+                //this.RemoveDrawingObject(guideLine);
                 Debug.WriteLine("Object " + guideLine.ToString() + " removed from canvas");
             }
         }
 
-        public List<Point> GetStoredObjectsCornerPoints(Guid activeObjID)
+        private void StoreObjectCornerPoints(DrawingObject obj)
         {
-            List<Point> storedObjectCornerPoints = new List<Point>();
-
-            foreach (DrawingObject obj in this.drawingObjects)
-            {
-                if (obj.ID != activeObjID)
-                {
-                    storedObjectCornerPoints.AddRange(obj.GetCornerPoints());
-                }
-            }
-
-            return storedObjectCornerPoints;
+            this.CornerPointsByGuid.Add(obj.ID, obj.GetCornerPoints());
         }
     }
 }

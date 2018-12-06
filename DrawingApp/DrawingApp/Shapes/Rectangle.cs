@@ -158,10 +158,10 @@ namespace DrawingApp.Shapes
             int centerX = this.CenterPoint.X;
             int centerY = this.CenterPoint.Y;
 
-            this.CornerPoints.Add(new Point(centerX - halfWidth, centerY + halfHeight));
-            this.CornerPoints.Add(new Point(centerX + halfWidth, centerY + halfHeight));
             this.CornerPoints.Add(new Point(centerX - halfWidth, centerY - halfHeight));
+            this.CornerPoints.Add(new Point(centerX - halfWidth, centerY + halfHeight));
             this.CornerPoints.Add(new Point(centerX + halfWidth, centerY - halfHeight));
+            this.CornerPoints.Add(new Point(centerX + halfWidth, centerY + halfHeight));
         }
     }
 }

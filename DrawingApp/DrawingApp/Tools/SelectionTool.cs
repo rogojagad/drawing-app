@@ -53,14 +53,14 @@ namespace DrawingApp.Tools
         {
             this.xInitial = e.X;
             this.yInitial = e.Y;
-            Debug.WriteLine(this.multiselectState);
-            
+
             if (e.Button == MouseButtons.Left && canvas != null)
             {
                 if (! multiselectState)
                 {
                     canvas.DeselectAllObjects();
                     this.selectedObjects.Clear();
+                    this.selectedObject = null;
                 }
 
                 //this.selectedObject = canvas.SelectObjectAt(e.X, e.Y);
@@ -83,9 +83,9 @@ namespace DrawingApp.Tools
                             //if (!selectedObjects.Any()) selectedObjects.Add(this.selectedObject);
                             this.selectedObjects.Add(obj);
                         }
-                        Debug.WriteLine(this.selectedObjects.Count());
                         this.selectedObject = obj;
                         obj.ChangeState(EditState.GetInstance());
+                        
                         break;
                     }
                 }
@@ -117,7 +117,7 @@ namespace DrawingApp.Tools
 
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Debug.WriteLine("Double click on selection tool");
+            
         }
         
         public void ToolKeyUp(object sender, KeyEventArgs e)
