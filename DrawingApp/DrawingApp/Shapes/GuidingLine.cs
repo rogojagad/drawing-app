@@ -40,10 +40,8 @@ namespace DrawingApp.Shapes
             {
                 try
                 {
-                    Debug.WriteLine(this.GetGraphics().ToString());
                     this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
                     this.GetGraphics().DrawLine(this.pen, this.Startpoint, this.Endpoint);
-                    Debug.WriteLine(this.GetGraphics().SmoothingMode);
                 }
                 catch (ArgumentException ex)
                 {

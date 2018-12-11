@@ -178,6 +178,7 @@ namespace DrawingApp
         public void RemoveDrawingObject(DrawingObject drawingObject)
         {
             this.drawingObjects.Remove(drawingObject);
+            Debug.WriteLine("Remove called");
         }
 
         public DrawingObject GetObjectAt(int x, int y)
@@ -224,47 +225,32 @@ namespace DrawingApp
 
             foreach(Point activeObjPoint in activeObject.GetCornerPoints())
             {
+                int flag = 0;
                 foreach(Point storedObjPoint in this.GetStoredObjectPoints(activeObject.ID))
                 {
                     if( activeObjPoint.X == storedObjPoint.X )
                     {
                         this.ShowGuideLine(new Point(activeObjPoint.X, 0), new Point(activeObjPoint.X, 1000), g);
+                        flag = 1;
+                        break;
+                        
                     }
                     else if (activeObjPoint.Y == storedObjPoint.Y)
                     {
                         this.ShowGuideLine(new Point(0, activeObjPoint.Y), new Point(1000, activeObjPoint.Y), g);
+                        flag = 1;
+                        break;
                     }
+                }
+
+                if (flag == 0)
+                {
+                    this.DismissGuideLine();
                 }
             }
 
             //this.ShowGuideLine(new Point(100, 0), new Point(100, 100), g);
-            //Debug.WriteLine(this.drawingObjects.Count);
-            /*
-            foreach (KeyValuePair<Guid, List<Point>> entry in this.CornerPointsByGuid)
-            {
-                if( entry.Key != activeObject.ID )
-                {
-                    foreach (Point pointStored in entry.Value)
-                    {
-                        foreach (Point activePoint in activeObject.GetCornerPoints())
-                        {
-                            if (pointStored.X == activePoint.X)
-                            {
-                                Debug.WriteLine("Segaris di X");
-                                this.ShowGuideLine(new Point(activePoint.X, 0), new Point(activePoint.X, 1000), g);
-                            }
-                            else if (pointStored.Y == activePoint.Y)
-                            {
-                                Debug.WriteLine("Segaris di Y");
-                                this.ShowGuideLine(new Point(0, activePoint.Y), new Point(1000, activePoint.Y), g);
-                            }
-                            
-                        }
-                    }
-                }
-            }
-            */
-           
+            
         }
 
         private void ShowGuideLine(Point startpoint, Point endpoint, Graphics g)
@@ -283,13 +269,13 @@ namespace DrawingApp
             guideLine.Draw();
         }
 
-        private void DismissGuideLine(GuidingLine guideLine)
+        private void DismissGuideLine()
         {
-            if( this.drawingObjects.Contains(guideLine) )
+            GuidingLine guidingLine = GuidingLine.GetInstance();
+
+            if (this.drawingObjects.Contains(guidingLine))
             {
-                //this.drawingObjects.Remove(guideLine);
-                //this.RemoveDrawingObject(guideLine);
-                Debug.WriteLine("Object " + guideLine.ToString() + " removed from canvas");
+                this.RemoveDrawingObject(guidingLine);
             }
         }
 
