@@ -242,11 +242,12 @@ namespace DrawingApp
                         break;
                     }
                 }
-
+                /*
                 if (flag == 0)
                 {
                     this.DismissGuideLine();
                 }
+                */
             }
 
             //this.ShowGuideLine(new Point(100, 0), new Point(100, 100), g);
@@ -269,7 +270,7 @@ namespace DrawingApp
             guideLine.Draw();
         }
 
-        private void DismissGuideLine()
+        public void DismissGuideLine()
         {
             GuidingLine guidingLine = GuidingLine.GetInstance();
 

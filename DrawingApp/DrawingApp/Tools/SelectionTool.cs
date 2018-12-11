@@ -112,7 +112,7 @@ namespace DrawingApp.Tools
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
-            
+            this.canvas.DismissGuideLine();
         }
 
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)

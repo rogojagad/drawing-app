@@ -21,5 +21,6 @@ namespace DrawingApp
         List<DrawingObject> GetDrawingObjects();
         void DeselectAllObjects();
         void CheckAlignedObjects(DrawingObject activeObject);
+        void DismissGuideLine();
     }
 }
