@@ -101,7 +101,8 @@ namespace DrawingApp.Tools
                     xInitial = e.X;
                     yInitial = e.Y;
 
-                    selectedObject.Translate(e.X, e.Y, xAmount, yAmount);
+                    this.selectedObject.Translate(e.X, e.Y, xAmount, yAmount);
+                    this.canvas.SetOrUpdatePointsByGuid(this.selectedObject);
                     this.canvas.CheckAlignedObjects(this.selectedObject);
                 }
             }

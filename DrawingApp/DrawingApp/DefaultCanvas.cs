@@ -11,6 +11,7 @@ namespace DrawingApp
     {
         private ITool activeTool;
         private List<DrawingObject> drawingObjects;
+        private Dictionary<Guid, List<Point>> pointsByGuid;
 
         public DefaultCanvas()
         {
@@ -20,6 +21,8 @@ namespace DrawingApp
         private void Init()
         {
             this.drawingObjects = new List<DrawingObject>();
+
+            this.pointsByGuid = new Dictionary<Guid, List<Point>>();
 
             this.DoubleBuffered = true;
 
@@ -222,28 +225,30 @@ namespace DrawingApp
         public void CheckAlignedObjects(DrawingObject activeObject)
         {
             Graphics g = this.CreateGraphics();
+            List<Point> activePoints = activeObject.GetCornerPoints();
 
-            foreach(Point activeObjPoint in activeObject.GetCornerPoints())
+            foreach(KeyValuePair<Guid, List<Point>> entry in this.pointsByGuid)
             {
-                foreach(Point storedObjPoint in this.GetStoredObjectPoints(activeObject.ID))
+                if(! activeObject.ID.Equals(entry.Key) )
                 {
-                    if( activeObjPoint.X == storedObjPoint.X )
+                    foreach(Point objPoint in entry.Value)
                     {
-                        Debug.WriteLine("Aligned found at X " + activeObjPoint.X);
-                        
-                        this.ShowGuideLine(new Point(activeObjPoint.X, 0), new Point(activeObjPoint.X, 1000), g);
-                        break;
-                        
-                    }
-                    else if (activeObjPoint.Y == storedObjPoint.Y)
-                    {
-                        Debug.WriteLine("Aligned found at Y " + activeObjPoint.Y);
-                        
-                        this.ShowGuideLine(new Point(0, activeObjPoint.Y), new Point(1000, activeObjPoint.Y), g);
-                        break;
+                        foreach(Point activePoint in activePoints)
+                        {
+                            if( activePoint.X == objPoint.X )
+                            {
+                                this.ShowGuideLine(new Point(activePoint.X, 0), new Point(activePoint.X, 1000), g);
+                                break;
+                            }
+                            else if (activePoint.Y == objPoint.Y)
+                            {
+                                this.ShowGuideLine(new Point(0, activePoint.Y), new Point(1000, activePoint.Y), g);
+                                break;
+                            }
+                        }
                     }
                 }
-            }            
+            }
             
         }
 
@@ -289,6 +294,12 @@ namespace DrawingApp
             }
 
             return storedObjPoints;
+        }
+
+        public void SetOrUpdatePointsByGuid(DrawingObject obj)
+        {
+            this.pointsByGuid[obj.ID] = obj.GetCornerPoints();
+            Debug.WriteLine(this.pointsByGuid.Count);
         }
     }
 }

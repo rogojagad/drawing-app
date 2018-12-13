@@ -48,6 +48,7 @@ namespace DrawingApp.Tools
             if (e.Button == MouseButtons.Left)
             {
                 this.rectangle = new Rectangle(e.X, e.Y);
+                this.canvas.SetOrUpdatePointsByGuid(this.rectangle);
                 this.canvas.AddDrawingObject(this.rectangle);
             }
         }

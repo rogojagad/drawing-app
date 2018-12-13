@@ -51,6 +51,7 @@ namespace DrawingApp.Tools
             {
                 lineSegment = new LineSegment(new System.Drawing.Point(e.X, e.Y));
                 lineSegment.Endpoint = new System.Drawing.Point(e.X, e.Y);
+                this.canvas.SetOrUpdatePointsByGuid(lineSegment);
                 canvas.AddDrawingObject(lineSegment);
             }
         }

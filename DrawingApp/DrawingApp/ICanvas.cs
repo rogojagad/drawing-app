@@ -22,5 +22,6 @@ namespace DrawingApp
         void DeselectAllObjects();
         void CheckAlignedObjects(DrawingObject activeObject);
         void DismissGuideLine();
+        void SetOrUpdatePointsByGuid(DrawingObject obj);
     }
 }
