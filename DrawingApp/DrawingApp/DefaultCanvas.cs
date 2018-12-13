@@ -20,6 +20,7 @@ namespace DrawingApp
         private void Init()
         {
             this.drawingObjects = new List<DrawingObject>();
+
             this.DoubleBuffered = true;
 
             this.BackColor = Color.White;
@@ -178,7 +179,6 @@ namespace DrawingApp
         public void RemoveDrawingObject(DrawingObject drawingObject)
         {
             this.drawingObjects.Remove(drawingObject);
-            Debug.WriteLine("Remove called");
         }
 
         public DrawingObject GetObjectAt(int x, int y)
@@ -229,25 +229,21 @@ namespace DrawingApp
                 {
                     if( activeObjPoint.X == storedObjPoint.X )
                     {
+                        Debug.WriteLine("Aligned found at X " + activeObjPoint.X);
+                        
                         this.ShowGuideLine(new Point(activeObjPoint.X, 0), new Point(activeObjPoint.X, 1000), g);
                         break;
                         
                     }
                     else if (activeObjPoint.Y == storedObjPoint.Y)
                     {
+                        Debug.WriteLine("Aligned found at Y " + activeObjPoint.Y);
+                        
                         this.ShowGuideLine(new Point(0, activeObjPoint.Y), new Point(1000, activeObjPoint.Y), g);
                         break;
                     }
                 }
-                /*
-                if (flag == 0)
-                {
-                    this.DismissGuideLine();
-                }
-                */
-            }
-
-            //this.ShowGuideLine(new Point(100, 0), new Point(100, 100), g);
+            }            
             
         }
 
