@@ -225,20 +225,17 @@ namespace DrawingApp
 
             foreach(Point activeObjPoint in activeObject.GetCornerPoints())
             {
-                int flag = 0;
                 foreach(Point storedObjPoint in this.GetStoredObjectPoints(activeObject.ID))
                 {
                     if( activeObjPoint.X == storedObjPoint.X )
                     {
                         this.ShowGuideLine(new Point(activeObjPoint.X, 0), new Point(activeObjPoint.X, 1000), g);
-                        flag = 1;
                         break;
                         
                     }
                     else if (activeObjPoint.Y == storedObjPoint.Y)
                     {
                         this.ShowGuideLine(new Point(0, activeObjPoint.Y), new Point(1000, activeObjPoint.Y), g);
-                        flag = 1;
                         break;
                     }
                 }
@@ -264,7 +261,9 @@ namespace DrawingApp
 
             if (! this.drawingObjects.Contains(guideLine))
             {
-                this.AddDrawingObject(guideLine);
+                Debug.WriteLine("Guide Line added");
+                //this.AddDrawingObject(guideLine);
+                this.drawingObjects.Add(guideLine);
             }
 
             guideLine.Draw();
@@ -276,6 +275,7 @@ namespace DrawingApp
 
             if (this.drawingObjects.Contains(guidingLine))
             {
+                Debug.WriteLine("Guiding Line removed");
                 this.RemoveDrawingObject(guidingLine);
             }
         }

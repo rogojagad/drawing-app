@@ -38,6 +38,7 @@ namespace DrawingApp.Shapes
         {
             if (this.GetGraphics() != null)
             {
+                
                 try
                 {
                     this.GetGraphics().SmoothingMode = SmoothingMode.AntiAlias;
