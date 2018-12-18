@@ -235,14 +235,14 @@ namespace DrawingApp
                     {
                         foreach(Point activePoint in activePoints)
                         {
-                            if( activePoint.X == objPoint.X )
+                            if( activePoint.X < objPoint.X + 1 && activePoint.X > objPoint.X - 1)
                             {
-                                this.ShowGuideLine(new Point(activePoint.X, 0), new Point(activePoint.X, 1000), g);
+                                this.ShowGuideLine(new Point(objPoint.X, 0), new Point(objPoint.X, 1000), g);
                                 break;
                             }
                             else if (activePoint.Y == objPoint.Y)
                             {
-                                this.ShowGuideLine(new Point(0, activePoint.Y), new Point(1000, activePoint.Y), g);
+                                this.ShowGuideLine(new Point(0, objPoint.Y), new Point(1000, objPoint.Y), g);
                                 break;
                             }
                         }
@@ -280,7 +280,7 @@ namespace DrawingApp
                 this.RemoveDrawingObject(guidingLine);
             }
         }
-
+        /*
         private List<Point> GetStoredObjectPoints(Guid activeObjId)
         {
             List<Point> storedObjPoints = new List<Point>();
@@ -295,7 +295,7 @@ namespace DrawingApp
 
             return storedObjPoints;
         }
-
+        */
         public void SetOrUpdatePointsByGuid(DrawingObject obj)
         {
             this.pointsByGuid[obj.ID] = obj.GetCornerPoints();
