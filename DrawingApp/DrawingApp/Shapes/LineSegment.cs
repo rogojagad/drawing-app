@@ -93,6 +93,8 @@ namespace DrawingApp.Shapes
         {
             this.Startpoint = new Point(this.Startpoint.X + xAmount, this.Startpoint.Y + yAmount);
             this.Endpoint = new Point(this.Endpoint.X + xAmount, this.Endpoint.Y + yAmount);
+            
+            this.SetCornerPoints();
         }
 
         public double GetSlope()
@@ -100,14 +102,25 @@ namespace DrawingApp.Shapes
             return (double)(Endpoint.Y - Startpoint.Y) / (double)(Endpoint.X - Startpoint.X);
         }
 
-        public override bool Add(DrawingObject obj)
+        public override bool AddDrawingObject(DrawingObject obj)
         {
             return false;   
         }
 
-        public override bool Remove(DrawingObject obj)
+        public override bool RemoveDrawingObject(DrawingObject obj)
         {
             return false;
+        }
+
+        public override void SetCornerPoints()
+        {
+            if(this.CornerPoints.Count != 0)
+            {
+                this.CornerPoints.Clear();
+            }
+
+            this.CornerPoints.Add(this.Startpoint);
+            this.CornerPoints.Add(this.Endpoint);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace DrawingApp.Tools
                 }
                 else
                 {
-                    bool allowed = obj.Add(text);
+                    bool allowed = obj.AddDrawingObject(text);
 
                     if (!allowed)
                     {

@@ -20,5 +20,8 @@ namespace DrawingApp
         DrawingObject SelectObjectAt(int x, int y);
         List<DrawingObject> GetDrawingObjects();
         void DeselectAllObjects();
+        void CheckAlignedObjects(DrawingObject activeObject);
+        void DismissGuideLine();
+        void SetOrUpdatePointsByGuid(DrawingObject obj);
     }
 }

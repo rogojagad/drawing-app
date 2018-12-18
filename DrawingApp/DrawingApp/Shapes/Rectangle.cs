@@ -42,7 +42,7 @@ namespace DrawingApp.Shapes
             int Xcenter = this.X + this.Width / 2;
             int Ycenter = this.Y + this.Height / 2;
 
-            this.CenterPoint = new System.Drawing.Point(Xcenter, Ycenter);
+            this.CenterPoint = new Point(Xcenter, Ycenter);
         }
 
         public override bool Intersect(int xTest, int yTest)
@@ -108,19 +108,21 @@ namespace DrawingApp.Shapes
 
             this.SetCenterPoint();
 
+            this.SetCornerPoints();
+
             foreach (DrawingObject obj in this.drawingObjects)
             {
                 obj.Translate(x, y, xAmount, yAmount);
             }
         }
 
-        public override bool Add(DrawingObject obj)
+        public override bool AddDrawingObject(DrawingObject obj)
         {
             drawingObjects.Add(obj);
             return true;
         }
 
-        public override bool Remove(DrawingObject obj)
+        public override bool RemoveDrawingObject(DrawingObject obj)
         {
             drawingObjects.Remove(obj);
             return true;
@@ -142,6 +144,24 @@ namespace DrawingApp.Shapes
             {
                 observer.Update();
             }
+        }
+
+        public override void SetCornerPoints()
+        {
+            if(this.CornerPoints.Count != 0)
+            {
+                this.CornerPoints.Clear();
+            }
+
+            int halfWidth = this.Width / 2;
+            int halfHeight = this.Height / 2;
+            int centerX = this.CenterPoint.X;
+            int centerY = this.CenterPoint.Y;
+
+            this.CornerPoints.Add(new Point(centerX - halfWidth, centerY - halfHeight));
+            this.CornerPoints.Add(new Point(centerX - halfWidth, centerY + halfHeight));
+            this.CornerPoints.Add(new Point(centerX + halfWidth, centerY - halfHeight));
+            this.CornerPoints.Add(new Point(centerX + halfWidth, centerY + halfHeight));
         }
     }
 }

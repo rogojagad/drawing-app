@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using DrawingApp.Shapes;
 
 namespace DrawingApp
 {
@@ -10,6 +11,7 @@ namespace DrawingApp
     {
         private ITool activeTool;
         private List<DrawingObject> drawingObjects;
+        private Dictionary<Guid, List<Point>> pointsByGuid;
 
         public DefaultCanvas()
         {
@@ -19,6 +21,9 @@ namespace DrawingApp
         private void Init()
         {
             this.drawingObjects = new List<DrawingObject>();
+
+            this.pointsByGuid = new Dictionary<Guid, List<Point>>();
+
             this.DoubleBuffered = true;
 
             this.BackColor = Color.White;
@@ -159,9 +164,19 @@ namespace DrawingApp
 
         public void AddDrawingObject(DrawingObject drawingObject)
         {
+            
             this.drawingObjects.Add(drawingObject);
+
             this.Repaint();
-            Debug.WriteLine("New drawing object");
+            /*
+            if(! this.CornerPointsByGuid.ContainsKey(drawingObject.ID))
+            {
+                if (drawingObject.GetType() != typeof(GuidingLine))
+                {
+                    this.StoreObjectCornerPoints(drawingObject);
+                }
+            }
+            */
         }
 
         public void RemoveDrawingObject(DrawingObject drawingObject)
@@ -207,5 +222,84 @@ namespace DrawingApp
             return this.drawingObjects;
         }
 
+        public void CheckAlignedObjects(DrawingObject activeObject)
+        {
+            Graphics g = this.CreateGraphics();
+            List<Point> activePoints = activeObject.GetCornerPoints();
+
+            foreach(KeyValuePair<Guid, List<Point>> entry in this.pointsByGuid)
+            {
+                if(! activeObject.ID.Equals(entry.Key) )
+                {
+                    foreach(Point objPoint in entry.Value)
+                    {
+                        foreach(Point activePoint in activePoints)
+                        {
+                            if(activePoint.X > objPoint.X - 3 && activePoint.X < objPoint.X + 3)
+                            {
+                                this.ShowGuideLine(new Point(objPoint.X, 0), new Point(objPoint.X, 1000), g);
+                                break;
+                            }
+                            else if (activePoint.Y > objPoint.Y - 3 && activePoint.Y < objPoint.Y + 3)
+                            {
+                                this.ShowGuideLine(new Point(0, objPoint.Y), new Point(1000, objPoint.Y), g);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+
+        private void ShowGuideLine(Point startpoint, Point endpoint, Graphics g)
+        {
+            GuidingLine guideLine = GuidingLine.GetInstance();
+
+            guideLine.Startpoint = startpoint;
+            guideLine.Endpoint = endpoint;
+            guideLine.SetGraphics(g);
+
+            if (! this.drawingObjects.Contains(guideLine))
+            {
+                Debug.WriteLine("Guide Line added");
+                //this.AddDrawingObject(guideLine);
+                this.drawingObjects.Add(guideLine);
+            }
+
+            guideLine.Draw();
+        }
+
+        public void DismissGuideLine()
+        {
+            GuidingLine guidingLine = GuidingLine.GetInstance();
+
+            if (this.drawingObjects.Contains(guidingLine))
+            {
+                Debug.WriteLine("Guiding Line removed");
+                this.RemoveDrawingObject(guidingLine);
+            }
+        }
+        /*
+        private List<Point> GetStoredObjectPoints(Guid activeObjId)
+        {
+            List<Point> storedObjPoints = new List<Point>();
+
+            foreach(DrawingObject obj in this.drawingObjects)
+            {
+                if(obj.ID != activeObjId)
+                {
+                    storedObjPoints.AddRange(obj.GetCornerPoints());
+                }
+            }
+
+            return storedObjPoints;
+        }
+        */
+        public void SetOrUpdatePointsByGuid(DrawingObject obj)
+        {
+            this.pointsByGuid[obj.ID] = obj.GetCornerPoints();
+            Debug.WriteLine(this.pointsByGuid.Count);
+        }
     }
 }

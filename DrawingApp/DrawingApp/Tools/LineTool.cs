@@ -51,6 +51,7 @@ namespace DrawingApp.Tools
             {
                 lineSegment = new LineSegment(new System.Drawing.Point(e.X, e.Y));
                 lineSegment.Endpoint = new System.Drawing.Point(e.X, e.Y);
+                this.canvas.SetOrUpdatePointsByGuid(lineSegment);
                 canvas.AddDrawingObject(lineSegment);
             }
         }
@@ -73,7 +74,8 @@ namespace DrawingApp.Tools
                 if (e.Button == MouseButtons.Left)
                 {
                     lineSegment.Endpoint = new System.Drawing.Point(e.X, e.Y);
-                    lineSegment.Select();
+                    lineSegment.SetCornerPoints();
+                    lineSegment.Select();                    
                 }
                 else if (e.Button == MouseButtons.Right)
                 {

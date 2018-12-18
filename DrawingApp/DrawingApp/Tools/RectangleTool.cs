@@ -48,6 +48,7 @@ namespace DrawingApp.Tools
             if (e.Button == MouseButtons.Left)
             {
                 this.rectangle = new Rectangle(e.X, e.Y);
+                this.canvas.SetOrUpdatePointsByGuid(this.rectangle);
                 this.canvas.AddDrawingObject(this.rectangle);
             }
         }
@@ -78,10 +79,8 @@ namespace DrawingApp.Tools
             {
                 if (e.Button == MouseButtons.Left)
                 {
+                    this.rectangle.SetCornerPoints();
                     this.rectangle.Select();
-
-                    Debug.WriteLine(this.rectangle.CenterPoint.X);
-                    Debug.WriteLine(this.rectangle.CenterPoint.Y);
                 }
                 else if (e.Button == MouseButtons.Right)
                 {

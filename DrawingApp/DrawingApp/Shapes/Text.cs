@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace DrawingApp.Shapes
 {
@@ -24,12 +25,12 @@ namespace DrawingApp.Shapes
             );
         }
 
-        public override bool Add(DrawingObject obj)
+        public override bool AddDrawingObject(DrawingObject obj)
         {
             return false;
         }
 
-        public override bool Remove(DrawingObject obj)
+        public override bool RemoveDrawingObject(DrawingObject obj)
         {
             return false;
         }
@@ -57,6 +58,11 @@ namespace DrawingApp.Shapes
         public override void Translate(int x, int y, int xAmount, int yAmount)
         {
             Position = new PointF(Position.X + xAmount, Position.Y + yAmount);
+        }
+
+        public override void SetCornerPoints()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

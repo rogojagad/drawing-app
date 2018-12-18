@@ -1,10 +1,7 @@
 ﻿using DrawingApp.Shapes;
 using DrawingApp.States;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -53,13 +50,14 @@ namespace DrawingApp.Tools
         {
             this.xInitial = e.X;
             this.yInitial = e.Y;
-            Debug.WriteLine(this.multiselectState);
+
             if (e.Button == MouseButtons.Left && canvas != null)
             {
                 if (! multiselectState)
                 {
                     canvas.DeselectAllObjects();
                     this.selectedObjects.Clear();
+                    this.selectedObject = null;
                 }
 
                 //this.selectedObject = canvas.SelectObjectAt(e.X, e.Y);
@@ -82,9 +80,9 @@ namespace DrawingApp.Tools
                             //if (!selectedObjects.Any()) selectedObjects.Add(this.selectedObject);
                             this.selectedObjects.Add(obj);
                         }
-                        Debug.WriteLine(this.selectedObjects.Count());
                         this.selectedObject = obj;
                         obj.ChangeState(EditState.GetInstance());
+                        
                         break;
                     }
                 }
@@ -103,22 +101,24 @@ namespace DrawingApp.Tools
                     xInitial = e.X;
                     yInitial = e.Y;
 
-                    selectedObject.Translate(e.X, e.Y, xAmount, yAmount);
+                    this.selectedObject.Translate(e.X, e.Y, xAmount, yAmount);
+                    this.canvas.SetOrUpdatePointsByGuid(this.selectedObject);
+                    this.canvas.CheckAlignedObjects(this.selectedObject);
                 }
             }
         }
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
-            
+            if (e.Button == MouseButtons.Left && canvas != null)
+            {
+                this.canvas.DismissGuideLine();
+            }
         }
 
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Text text = new Text();
-            text.Value = "Hello world";
-            selectedObject.Add(text);
-            Debug.WriteLine("Double click on selection tool");
+            
         }
         
         public void ToolKeyUp(object sender, KeyEventArgs e)
@@ -149,7 +149,7 @@ namespace DrawingApp.Tools
 
                 foreach (DrawingObject obj in this.selectedObjects)
                 {
-                    drawingGroup.Add(obj);
+                    drawingGroup.AddDrawingObject(obj);
                 }
 
                 drawingGroup.ChangeState(EditState.GetInstance());

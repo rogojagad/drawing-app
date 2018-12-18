@@ -23,5 +23,10 @@ namespace DrawingApp.Commands
             this.canvas.SetBackgroundColor(Color.White);
             this.canvas.Repaint();
         }
+
+        public void Unexecute()
+        {
+            
+        }
     }
 }
