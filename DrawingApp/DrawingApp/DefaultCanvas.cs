@@ -235,12 +235,12 @@ namespace DrawingApp
                     {
                         foreach(Point activePoint in activePoints)
                         {
-                            if( activePoint.X < objPoint.X + 1 && activePoint.X > objPoint.X - 1)
+                            if(activePoint.X > objPoint.X - 3 && activePoint.X < objPoint.X + 3)
                             {
                                 this.ShowGuideLine(new Point(objPoint.X, 0), new Point(objPoint.X, 1000), g);
                                 break;
                             }
-                            else if (activePoint.Y == objPoint.Y)
+                            else if (activePoint.Y > objPoint.Y - 3 && activePoint.Y < objPoint.Y + 3)
                             {
                                 this.ShowGuideLine(new Point(0, objPoint.Y), new Point(1000, objPoint.Y), g);
                                 break;
