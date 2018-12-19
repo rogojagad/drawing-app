@@ -122,7 +122,7 @@ namespace DrawingApp.Tools
         }
         
         public void ToolKeyUp(object sender, KeyEventArgs e)
-        {
+        {           
             if (e.KeyCode == System.Windows.Forms.Keys.ShiftKey)
             {
                 this.multiselectState = false;

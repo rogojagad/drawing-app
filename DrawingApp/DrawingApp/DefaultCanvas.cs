@@ -168,15 +168,6 @@ namespace DrawingApp
             this.drawingObjects.Add(drawingObject);
 
             this.Repaint();
-            /*
-            if(! this.CornerPointsByGuid.ContainsKey(drawingObject.ID))
-            {
-                if (drawingObject.GetType() != typeof(GuidingLine))
-                {
-                    this.StoreObjectCornerPoints(drawingObject);
-                }
-            }
-            */
         }
 
         public void RemoveDrawingObject(DrawingObject drawingObject)
