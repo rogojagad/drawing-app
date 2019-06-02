@@ -1,0 +1,2 @@
+# drawing-app
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a578e20d1b5b44efaa1f288eac2651ae)](https://app.codacy.com/app/rogojagad/drawing-app?utm_source=github.com&utm_medium=referral&utm_content=rogojagad/drawing-app&utm_campaign=Badge_Grade_Dashboard)
